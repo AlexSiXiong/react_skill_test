@@ -44,6 +44,9 @@ You may find the test data in ```data.ts```
 - tsconfig strict mode
 - type-safety
 
+### Data
+- add ```couple``` for each couple to index to their partner
+- create a dictionary to index each person (```id``` is the key of the dict)
 
 ## How to Start
 Install required dependencies
