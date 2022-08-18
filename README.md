@@ -1,8 +1,53 @@
-# Getting Started with Create React App
+# React Skills Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Exercise
+Create a UI component that renders hierarchical data following the UI Guideline section below, with or
+without the joining lines and icon, and a web application to demonstrate the component, preferably using
+create-react-app, preferably typescript and the test data provided.
+The requirements are as follows:
+- People with a gender of "female" should have background-color lightpink
+- People with gender of "male" should have background-color lightblue.
+- Each box should contain the person’s name
+- The component should be able to consume any family tree, not just the one provided
 
-## Available Scripts
+## Display
+
+- Case 1  
+  <Br/>
+  ![image](./git_display_IMG/render_sample.jpg)  
+  <Br/>
+- Case 2  
+  <Br/>
+  ![image](./git_display_IMG/render_sample2.jpg)
+
+
+## More About FamilyTree Data
+- Won't display person who does not have personal information.
+  (The person id may exist in children list under one's info but with no more information.)
+- Support input data with more than one family with descendants.
+- Support display a family with one person.
+- Support input data with random sequence.
+
+- I define 'family' as parents the in top level who both don't have parents.
+
+You may find the test data in ```data.ts```
+
+## Design
+
+### Components
+- one generation is in one layer
+- a couple is a component
+- one child is a component
+
+### Others
+- use recursion
+- tsconfig strict mode
+- type-safety
+
+
+## How to Start
+Install required dependencies
+### `npm install`
 
 In the project directory, you can run:
 
@@ -13,34 +58,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
