@@ -1,4 +1,4 @@
-import {IPersonProps, INameDictProps, IDepthDict} from "./interfaces";
+import {IPersonProps, INameDictProps} from "./interfaces";
 import {familyTree} from "./data";
 
 function generate_dictTree(data: IPersonProps[]) {
@@ -35,6 +35,7 @@ function add_couple(dict_tree: INameDictProps) {
 
 function getTopPeople(dict_tree: INameDictProps) {
     let top_id: number[] = []
+    let top_parents: number[] = []
 
     // find top people
     for (let i in dict_tree) {
@@ -42,55 +43,33 @@ function getTopPeople(dict_tree: INameDictProps) {
         if (cur.parents.length === 0 && cur.children.length === 0) {
             top_id.push(cur.id)
         }
-    }
-
-    let deep_parents = get_top_parent_id(dict_tree)
-    return deep_parents.concat(top_id)
-}
-
-function getValueOfMaxKey(obj: IDepthDict) {
-    return Object.keys(obj).reduce((a, b) => obj[a] < obj[b] ? a : b);
-}
-function get_top_parent_id (family_dict: INameDictProps) {
-    let depth_dict:IDepthDict = {}
-
-    for (let i in family_dict) {
-        let depth = get_max_family_depth(family_dict, family_dict[i], 0)
-
-        if (!depth_dict[depth]) {
-            depth_dict[depth] = []
-        }
-
-        depth_dict[depth].push(family_dict[i].id)
-
-    }
-
-    let deep_parents = depth_dict[getValueOfMaxKey(depth_dict)]
-
-    for (let i in deep_parents) {
-        let potential_top_person_id = deep_parents[i]
-        let potential_couple = family_dict[potential_top_person_id].couple
-        if (potential_couple) {
-            deep_parents.splice(deep_parents.indexOf(deep_parents[potential_couple]), 1)
-        }
-    }
-    return deep_parents
-}
-function get_max_family_depth (family_dict: INameDictProps, person: IPersonProps, depth: number) {
-    let max_depth = depth
-    let cur_depth = depth
-    if (person.children) {
-        for (let i in person.children) {
-            let child_id = person.children[i]
-            let depth = get_max_family_depth(family_dict, family_dict[child_id], cur_depth+1)
-            if (depth >= max_depth) {
-                max_depth = depth
+        if (cur.parents.length === 0 && cur.children.length !== 0 && cur.couple) {
+            let cur_couple = dict_tree[cur.couple]
+            if (cur_couple.parents.length === 0) {
+                top_parents.push(cur.id)
             }
         }
     }
-    return max_depth
+
+    let top_parent = get_top_parent_id(dict_tree, top_parents)
+    return top_parent.concat(top_id)
 }
 
+// function getValueOfMaxKey(obj: IDepthDict) {
+//     return Object.keys(obj).reduce((a, b) => obj[a] < obj[b] ? a : b);
+// }
+
+function get_top_parent_id (family_dict: INameDictProps, top_parents: number[]) {
+
+    for (let i in top_parents) {
+        let potential_top_person_id = top_parents[i]
+        let potential_couple = family_dict[potential_top_person_id].couple
+        if (potential_couple) {
+            top_parents.splice(top_parents.indexOf(top_parents[potential_couple]), 1)
+        }
+    }
+    return top_parents
+}
 
 const familyDictTree = generate_dictTree(familyTree)
 const topPeopleIds = getTopPeople(familyDictTree)
